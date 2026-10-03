@@ -1,0 +1,24 @@
+# Generated output and dependencies
+/dist/
+/node_modules/
+
+# Local hosting identity; not part of the GitHub deployment
+/.openai/
+/.sites-runtime/
+
+# Local secrets, editor files, and archives
+.env
+.env.*
+!.env.example
+*.log
+*.tar.gz
+*.zip
+.DS_Store
+Thumbs.db
+/.vscode/
+/.idea/
+
+# Earlier local checkouts; never add as embedded repositories
+/github-pages/
+/github-portfolio/
+/site/
