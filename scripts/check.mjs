@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
-export const assets = ['index.html', 'styles.css', 'app.js', 'assets/fastpitstop.jpg', 'assets/shadow-twins.png', 'assets/opspilot.jpg', 'assets/biopsy.jpg', 'assets/domain-shift.png'];
+export const assets = ['index.html', 'styles.css', 'app.js', 'assets/fastpitstop.jpg', 'assets/shadow-twins.png', 'assets/opspilot.jpg', 'assets/biopsy.jpg', 'assets/domain-shift.png', 'assets/artificial-life.png'];
 
 export function check() {
   for (const asset of assets) {

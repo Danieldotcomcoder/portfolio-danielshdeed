@@ -1,4 +1,14 @@
 const cases = {
+  life: {
+    category: 'ARTIFICIAL LIFE / IN PROGRESS', title: 'Artificial Life',
+    lead: 'Pond Memory is a local artificial-life laboratory for exploring how memory, changing food supplies, and competition shape foraging.',
+    problem: 'Remembering a food patch can save travel, but that memory can become stale when food is depleted or moves. The laboratory makes those trade-offs inspectable through individual creatures and controlled comparisons.',
+    decisions: ['Use Rust for the controlled simulation and WebAssembly to bring the laboratory into the browser.', 'Make creatures, remembered patches, and changing resources visible through a Three.js view.', 'Keep the separate Ecosystem prototype, with Scouts, Grazers, and Guardians, distinct from the archived controlled research studies.'],
+    evidence: 'The local project includes a browser laboratory, replay and inspection tools, and a separate 3D Ecosystem view. The image shown here is an existing local wetland-view capture of that prototype.',
+    limitation: 'In progress and not yet published on GitHub. This is an artificial model, not a claim about animal cognition or biological realism. Prototype behavior and exploratory diagnostics do not establish a general learning or evolutionary advantage.',
+    next: 'Continue developing the ecosystem and its inspection tools, documenting behavior checks and limitations before a public release.',
+    sources: ['artificial-life/README.md', 'artificial-life/docs/ECOSYSTEM.md']
+  },
   biopsy: {
     repository: 'https://github.com/Danieldotcomcoder/biopsy',
     category: 'AI SYSTEMS TOOLING / NEAR COMPLETION', title: 'biopsy',
