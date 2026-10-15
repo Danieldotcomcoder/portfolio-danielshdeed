@@ -46,18 +46,14 @@ const cases = {
   },
   domain: {
     repository: 'https://github.com/Danieldotcomcoder/domain-shift-forgettting',
-    category: 'INDEPENDENT RESEARCH / PREPARATION STAGE', title: 'Domain-Shift Forgetting',
-    lead: 'Does internal TaperNorm increase persistent held-out web deterioration after a switch to Python, relative to continued web training?',
-    problem: 'A domain switch can improve a model on new data while degrading prior capabilities. This Stage 1 pilot isolates one normalization question with paired training conditions and a fixed analysis plan.',
-    decisions: [
-      'Use paired seeds 101, 102, and 103, with canonical initialization across conditions and complete shared switch state within each trained prefix.',
-      'Compare RMS and Taper-minus as primary conditions. Fix a six-layer transformer with width 256, four heads, context 512, and final RMSNorm retained.',
-      'Measure held-out web cross-entropy difference-in-differences at continuation update 6,104. Keep reserved test data unopened and separate teaching-lab runs from the scientific pilot.'
-    ],
-    evidence: 'The documentation describes a protocol, data and leakage controls, preparation primitives, checkpoint replay requirements, and gated Kaggle execution paths. A separate local learning lab supports small training experiments.',
-    limitation: 'Scientific execution and real-data feasibility validation remain pending in the documentation. No empirical result or normalization advantage is claimed. Local lab runs and synthetic checks do not satisfy scientific evidence gates.',
-    next: 'Complete the real-data preflight, feasibility measurements, and fresh-session checkpoint restore requirements before running the fixed pilot. Report the prespecified outcome even if it is null or inconclusive.',
-    sources: ['domain-shift-forgetting/README.md', 'domain-shift-forgetting/docs/implementation.md']
+    category: 'CONTINUAL LEARNING / SCREENING STUDIES REPORTED', title: 'Domain-Shift Forgetting',
+    lead: 'Does gradually switching off internal normalization cause more forgetting after a training-domain shift?',
+    problem: 'Two prespecified screening studies compare internal RMSNorm and Taper-minus, using shared training prefixes, paired seeds, held-out development data, and explicit decision rules.',
+    decisions: ['Study 1 compares web-to-Python against continued-web controls on seeds 101–103.', 'Study 2 tests a separately specified Chinese-domain shift and repeats the Python comparison on three fresh seeds.', 'Prespecify endpoints and guardrails, separate exploratory analyses from planned contrasts, and keep reserved test data sealed.'],
+    evidence: 'The current README reports Study 1 mean D = −0.0223 nats/token and a STOP — SMALL OBSERVED EFFECT decision. The fresh-seed Python replication reports +0.0093 with the same decision; the Chinese shift reports −0.0325 in the opposite direction to the hypothesis. These are project-reported screening outcomes, not an independent reproduction.',
+    limitation: 'No study established the predicted excess forgetting, and none established equivalence within ±0.015 nats/token. Seed variability, development-only evaluation, model scale, and domain choice limit the conclusions. A negative contrast does not establish a general protective effect.',
+    next: 'Use the documented paper, protocols, and run records to assess the scope of the screening result before defining a separate follow-up study.',
+    sources: ['domain-shift-forgetting/README.md', 'domain-shift-forgetting/paper/main.pdf']
   },
   f1: {
     repository: 'https://github.com/Danieldotcomcoder/fastpitstop',
@@ -119,3 +115,27 @@ document.querySelector('[data-filter="all"] span').textContent = String(projectI
 document.querySelector('.work-tools').hidden = false;
 resultCount.hidden = false;
 updateProjects();
+
+const imageDialog = document.querySelector('#image-dialog');
+let lastImageTrigger;
+document.querySelectorAll('[data-image]').forEach(button => button.addEventListener('click', () => {
+  lastImageTrigger = button;
+  document.querySelector('#image-title').textContent = button.dataset.caption;
+  const expanded = document.querySelector('#expanded-image');
+  expanded.src = button.dataset.image;
+  expanded.alt = button.querySelector('img').alt;
+  imageDialog.showModal();
+  imageDialog.scrollTop = 0;
+  document.body.classList.add('modal-open');
+}));
+document.querySelector('#close-image').addEventListener('click', () => imageDialog.close());
+imageDialog.addEventListener('close', () => { document.body.classList.remove('modal-open'); lastImageTrigger?.focus(); });
+imageDialog.addEventListener('click', event => { if(event.target === imageDialog) { const r=imageDialog.getBoundingClientRect(); if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom) imageDialog.close(); } });
+document.querySelectorAll('.hero-window').forEach(link => link.addEventListener('click', () => {
+  selectedCategory = 'all';
+  projectSearch.value = '';
+  filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === 'all')));
+  updateProjects();
+}));
+document.querySelector('.header nav a[href="#work"] span').textContent = String(projectItems.length).padStart(2,'0');
+document.querySelector('.header nav a[href="#research"] span').textContent = String(document.querySelectorAll('.idea').length).padStart(2,'0');

@@ -1,23 +1,34 @@
-# Local portfolio redesign
+# Portfolio redesign: screenshot gallery
 
-Branch: `codex/portfolio-research-redesign`. Local preview only; nothing pushed or deployed.
+Local branch: `codex/portfolio-research-redesign`. No push or deployment.
 
-## Direction
+## Delivered
 
-A personal engineering and research journal: warm paper, dark green ink, cobalt accents, serif display details, restrained notation, and a CSS-drawn inquiry illustration. The project collection uses numbered rows rather than a fixed card grid, with category filters and text search. Research proposals remain distinct from delivered projects and retain their experiment and progress criteria.
+Replaced the previous design and stylesheet with a dark gallery: oversized typography, lime accents, layered real interface previews in the opening, a full-width featured project, and a two-column project collection. The pale green research notebook provides a distinct second act, followed by a shorter personal introduction and large contact link.
 
-## Growing the collection
+All five projects have local image assets, descriptive alt text, source captions, and click-to-enlarge dialogs. Category filters, search, result counts, native case-study dialogs, keyboard dismissal/focus restoration, responsive layouts, and reduced-motion support remain. Hero project links reset filters before navigating. Navigation and collection counts derive from the current HTML.
 
-Add a project article in `src/index.html` with a `data-category` of `systems`, `research`, or `tooling`, and a case-study button. Add its corresponding entry to `cases` in `src/app.js`. Search indexes the project body; the total and visible count update automatically. Add research questions as `details.idea` entries in the research notebook. Preserve documented project status and limits when updating content.
+## Image provenance
 
-No new dependencies. Without JavaScript, every project remains readable and the filter controls stay hidden. Existing project descriptions, case studies, repository links, and contact destinations are retained.
+- FastPitStop: fresh screenshot of a replay on `https://fastpitstop.online/sessions/2026/17`. Interface capture only; not independent verification of its analytics.
+- Shadow Twins: existing `llmbenchmarks/docs/screenshots/03-inspect-partial-route.png`. The screenshot shows a mock-provider run, as captioned.
+- OpsPilot: fresh screenshot of the existing built frontend, served locally. It shows seeded development sign-in; no running backend or populated investigation is implied.
+- biopsy: executed the existing release binary against `models/sick.safetensors`, captured its actual output in a readable terminal presentation, then took a browser screenshot. The expected exit status is 2 for the deliberately unhealthy fixture. No new results were invented.
+- Domain-Shift Forgetting: copied `paper/figures/trajectories.png`, an actual Study 1 figure. This is labeled as a paper figure rather than an application screenshot.
+
+The current Domain-Shift Forgetting README now reports screening study outcomes. Its portfolio summary and case study were updated accordingly, retaining the limits on scale, seeds, development-only evaluation, and interpretation. Results remain project-reported.
 
 ## Verification
 
-- Build and source checks passed (JavaScript syntax, assets, anchors, case-study references).
-- Browser checks confirmed research filtering, Rust text search, zero-result messaging, and modal opening/closing including Escape.
-- Narrow-screen DOM measurements showed no overflowing page elements at a reported 387 px viewport. A second reported 419 px viewport also had no overflowing main content.
-- Desktop opening visually inspected; a wrapped headline was shortened after inspection.
-- Browser screenshots became unavailable after viewport testing, so final desktop/mobile visual QA is limited; the running local browser preview remains the review surface.
+- `npm run build` passes source syntax, asset packaging, anchor, and case-study reference checks.
+- Browser verified all seven page images loaded (two opening previews plus five project images).
+- Research filter returns Shadow Twins and Domain-Shift Forgetting; Rust search returns biopsy; unmatched search shows the empty state.
+- Screenshot enlargement, source captions, Escape dismissal, and the updated research case-study dialog were exercised.
+- At the reported 419 px narrow viewport, no main/header element extended outside the viewport; five project visuals were present. Desktop DOM measurements also showed no horizontal overflow.
+- Project captures succeeded, but screenshot capture of the portfolio page itself continues to fail in the in-app browser. Final visual QA is therefore limited to DOM/layout measurements and the live local preview.
 
-The pre-existing README modification is unrelated and was preserved without editing or including it in the redesign commit.
+## Adding projects
+
+Add an article to `src/index.html` using the existing `project` structure, a unique `id="project-…"`, a `data-category` (`systems`, `research`, or `tooling`), an image button with `data-image` and `data-caption`, and case-study buttons whose `data-case` matches a key in `src/app.js`. Add its image under `src/assets/` and list its relative path in `scripts/check.mjs`; build and preview use that explicit allowlist. Keep image source/context captions accurate. New research ideas use native `details.idea` elements.
+
+No dependencies added. The user's pre-existing README modification is preserved and excluded from the redesign commit. Temporary capture tooling and review files are ignored under `.preview/`.

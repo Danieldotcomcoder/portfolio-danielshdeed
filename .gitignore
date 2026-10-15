@@ -22,3 +22,6 @@ Thumbs.db
 /github-pages/
 /github-portfolio/
 /site/
+
+# Temporary local capture tools and review images
+/.preview/
