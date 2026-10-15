@@ -90,3 +90,32 @@ document.querySelectorAll('[data-case]').forEach(button => button.addEventListen
 document.querySelector('#close-dialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', e => { if (e.target === dialog) { const r=dialog.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) dialog.close(); } });
 dialog.addEventListener('close', () => { document.body.classList.remove('modal-open'); lastTrigger?.focus(); });
+
+// The project index progressively enhances the complete, readable HTML collection.
+const projectItems = [...document.querySelectorAll('.project[data-category]')];
+const filterButtons = [...document.querySelectorAll('[data-filter]')];
+const projectSearch = document.querySelector('#project-search');
+const resultCount = document.querySelector('#result-count');
+let selectedCategory = 'all';
+const projectSearchText = new Map(projectItems.map(project => [project, project.querySelector('.project-body').textContent.toLowerCase()]));
+function updateProjects() {
+  const query = projectSearch.value.trim().toLowerCase();
+  let visible = 0;
+  for (const project of projectItems) {
+    const matches = (selectedCategory === 'all' || project.dataset.category === selectedCategory) && projectSearchText.get(project).includes(query);
+    project.hidden = !matches;
+    if (matches) visible++;
+  }
+  resultCount.textContent = `${String(visible).padStart(2, '0')} / ${String(projectItems.length).padStart(2, '0')} projects${query ? ' matching your search' : ''}`;
+  document.querySelector('.empty-state').hidden = visible !== 0;
+}
+filterButtons.forEach(button => button.addEventListener('click', () => {
+  selectedCategory = button.dataset.filter;
+  filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+  updateProjects();
+}));
+projectSearch.addEventListener('input', updateProjects);
+document.querySelector('[data-filter="all"] span').textContent = String(projectItems.length).padStart(2, '0');
+document.querySelector('.work-tools').hidden = false;
+resultCount.hidden = false;
+updateProjects();
